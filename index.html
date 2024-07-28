@@ -115,56 +115,56 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const subjectSelect = document.getElementById('subject');
-            const wordbookSelect = document.getElementById('wordbook');
-            const contactMethodSelect = document.getElementById('contactMethod');
-            const contactInput = document.getElementById('contact');
+    const subjectSelect = document.getElementById('subject');
+    const wordbookSelect = document.getElementById('wordbook');
+    const contactMethodSelect = document.getElementById('contactMethod');
+    const contactInput = document.getElementById('contact');
 
-            const wordbooks = {
-                '中学英語': ['高校受験ゲットスルー2600（英→和）【小学校単語350語】', '高校受験ゲットスルー2600（和→英）【小学校単語350語】', '高校受験ゲットスルー2600（英→和）【中学校単語2100語】', '高校受験ゲットスルー2600（和→英）【中学校単語2100語】'],
-                '高校英語': ['ターゲット1900【6訂版】（英→和）', 'ターゲット1900【6訂版】（和→英）', 'ターゲット1900【5訂版】（英→和）', 'ターゲット1900【5訂版】（和→英）','ターゲット1400【5訂版】（英→和）', 'ターゲット1400【5訂版】（和→英）', 'ターゲット1400【4訂版】（英→和）', 'ターゲット1400【4訂版】（和→英）','システム英単語【改訂五版】（英→和）','システム英単語【改訂五版】（和→英）','Next Stageイディオム・会話表現（英→和）','Next Stageイディオム・会話表現（和→英）'],
-                '高校古典': ['マドンナ古文単語230（Ex）', '重要気分単語315（Ex）', 'みるみる覚える古文単語【三訂版】（いいずな）','古文単語330【三訂版】（いいずな）','明快古典文法【改訂版】（いいずな）','大系古典文法【9版】(数研)']
-            };
+    const wordbooks = {
+        '中学英語': ['高校受験ゲットスルー2600（英→和）【小学校単語350語】', '高校受験ゲットスルー2600（和→英）【小学校単語350語】', '高校受験ゲットスルー2600（英→和）【中学校単語2100語】', '高校受験ゲットスルー2600（和→英）【中学校単語2100語】'],
+        '高校英語': ['ターゲット1900【6訂版】（英→和）', 'ターゲット1900【6訂版】（和→英）', 'ターゲット1900【5訂版】（英→和）', 'ターゲット1900【5訂版】（和→英）','ターゲット1400【5訂版】（英→和）', 'ターゲット1400【5訂版】（和→英）', 'ターゲット1400【4訂版】（英→和）', 'ターゲット1400【4訂版】（和→英）','システム英単語【改訂五版】（英→和）','システム英単語【改訂五版】（和→英）','Next Stageイディオム・会話表現（英→和）','Next Stageイディオム・会話表現（和→英）'],
+        '高校古典': ['マドンナ古文単語230（Ex）', '重要気分単語315（Ex）', 'みるみる覚える古文単語【三訂版】（いいずな）','古文単語330【三訂版】（いいずな）','明快古典文法【改訂版】（いいずな）','大系古典文法【9版】(数研)']
+    };
 
-            function updateWordbookOptions() {
-                const selectedSubject = subjectSelect.value;
-                const options = wordbooks[selectedSubject];
+    function updateWordbookOptions() {
+        const selectedSubject = subjectSelect.value;
+        const options = wordbooks[selectedSubject];
 
-                wordbookSelect.innerHTML = '';
-                options.forEach(option => {
-                    const opt = document.createElement('option');
-                    opt.value = option;
-                    opt.textContent = option;
-                    wordbookSelect.appendChild(opt);
-                });
-            }
+        wordbookSelect.innerHTML = '';
+        options.forEach(option => {
+            const opt = document.createElement('option');
+            opt.value = option;
+            opt.textContent = option;
+            wordbookSelect.appendChild(opt);
+        });
+    }
 
-            function updateContactInput() {
-                const selectedMethod = contactMethodSelect.value;
-                contactInput.placeholder = selectedMethod === 'LINE' ? 'LINEアカウント名' : '電話番号';
-            }
+    function updateContactInput() {
+        const selectedMethod = contactMethodSelect.value;
+        contactInput.placeholder = selectedMethod === 'LINE' ? 'LINEアカウント名' : '電話番号';
+    }
 
-            subjectSelect.addEventListener('change', updateWordbookOptions);
-            contactMethodSelect.addEventListener('change', updateContactInput);
+    subjectSelect.addEventListener('change', updateWordbookOptions);
+    contactMethodSelect.addEventListener('change', updateContactInput);
 
-            updateWordbookOptions();  // 初期化
-            updateContactInput();     // 初期化
+    updateWordbookOptions();  // 初期化
+    updateContactInput();     // 初期化
 
-            document.getElementById('notifyForm').addEventListener('submit', function(event) {
-                event.preventDefault();
+    document.getElementById('notifyForm').addEventListener('submit', function(event) {
+        event.preventDefault();
 
-                const name = document.getElementById('name').value;
-                const subject = document.getElementById('subject').value;
-                const wordbook = document.getElementById('wordbook').value;
-                const range = document.getElementById('range').value;
-                const format = document.getElementById('format').value;
-                const location = document.getElementById('location').value;
-                const notes = document.getElementById('notes').value;
-                const contactMethod = document.getElementById('contactMethod').value;
-                const contact = document.getElementById('contact').value;
-                const token = 'd6I7MhxEJjNbCHlSJ3arsamH7eGXV5g6OomiuiRNs63'; // 取得したLINE Notifyのトークンをここに入力
+        const name = document.getElementById('name').value;
+        const subject = document.getElementById('subject').value;
+        const wordbook = document.getElementById('wordbook').value;
+        const range = document.getElementById('range').value;
+        const format = document.getElementById('format').value;
+        const location = document.getElementById('location').value;
+        const notes = document.getElementById('notes').value;
+        const contactMethod = document.getElementById('contactMethod').value;
+        const contact = document.getElementById('contact').value;
+        const token = '8eYcZCzhaOzYUsfzU5FTtRiDqE8Qd4AAZUbcOLnTXGR'; // 取得したLINE Notifyのトークンをここに入力
 
-                const message = `
+        const message = `
 名前: ${name}
 単語の作成科目: ${subject}
 作成単語帳: ${wordbook}
@@ -174,30 +174,31 @@
 その他特記事項等: ${notes}
 作成後連絡方法: ${contactMethod}
 連絡先: ${contact}
-                `;
+        `;
 
-                fetch('https://notify-api.line.me/api/notify', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: `message=${encodeURIComponent(message)}`
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === 200) {
-                        alert('通知が送信されました');
-                    } else {
-                        alert('通知の送信に失敗しました');
-                    }
-                })
-                .catch(error => {
-                    console.error('エラー:', error);
-                    alert('通知の送信に失敗しました');
-                });
-            });
+        fetch('https://notify-api.line.me/api/notify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': `Bearer ${token}`
+            },
+            body: `message=${encodeURIComponent(message)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 200) {
+                alert('通知が送信されました');
+            } else {
+                alert('通知の送信に失敗しました');
+            }
+        })
+        .catch(error => {
+            console.error('エラー:', error);
+            alert('通知の送信に失敗しました');
         });
+    });
+});
+
     </script>
 </body>
 </html>
