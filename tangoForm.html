@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>単語テスト作成代行フォーム</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #007BFF;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007BFF;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <form id="notifyForm">
+        <h1>単語テスト作成フォーム</h1>
+        <label for="name">名前:</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="subject">単語の作成科目:</label>
+        <select id="subject" name="subject" required>
+            <option value="中学英語">中学英語</option>
+            <option value="高校英語">高校英語</option>
+            <option value="高校古典">高校古典</option>
+        </select>
+        
+        <label for="wordbook">作成単語帳:</label>
+        <select id="wordbook" name="wordbook" required>
+            <!-- 選択肢はJavaScriptで動的に変更 -->
+        </select>
+        
+        <label for="range">出題範囲:</label>
+        <input type="text" id="range" name="range" required placeholder="例: 1-50">
+        
+        <label for="format">出題形式:</label>
+        <select id="format" name="format" required>
+            <option value="番号順">番号順</option>
+            <option value="ランダム">ランダム</option>
+        </select>
+        
+        <label for="location">受け取り希望:</label>
+        <select id="location" name="location" required>
+            <option value="武庫女研究室での手渡し（武庫女生及び女子学生のみ）">武庫女研究室での手渡し（武庫女生及び女子学生のみ）</option>
+            <option value="次回宇田出勤日に引き出しに入れておく">次回宇田出勤日に引き出しに入れておく</option>
+            <option value="PDFで送信し、自分で印刷する。">PDFで送信し、自分で印刷する。</option>
+        </select>
+        
+        <label for="notes">その他特記事項等:</label>
+        <textarea id="notes" name="notes" rows="4" placeholder="自由入力欄"></textarea>
+        
+        <label for="contactMethod">作成後連絡方法:</label>
+        <select id="contactMethod" name="contactMethod" required>
+            <option value="LINE">LINE</option>
+            <option value="SMS">電話番号にSMSを送る</option>
+        </select>
+        
+        <label for="contact">連絡先:</label>
+        <input type="text" id="contact" name="contact" required>
+        
+        <button type="submit">送信</button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const subjectSelect = document.getElementById('subject');
+            const wordbookSelect = document.getElementById('wordbook');
+            const contactMethodSelect = document.getElementById('contactMethod');
+            const contactInput = document.getElementById('contact');
+
+            const wordbooks = {
+                '中学英語': ['高校受験ゲットスルー2600（英→和）【小学校単語350語】', '高校受験ゲットスルー2600（和→英）【小学校単語350語', '高校受験ゲットスルー2600（英→和）【中学校単語2100語】', '高校受験ゲットスルー2600（和→英）【中学校単語2100語】'],
+                '高校英語': ['ターゲット1900【6訂版】（英→和）', 'ターゲット1900【6訂版】（和→英）', 'ターゲット1900【5訂版】（英→和）', 'ターゲット1900【5訂版】（和→英）','ターゲット1400【5訂版】（英→和）', 'ターゲット1400【5訂版】（和→英）', 'ターゲット1400【4訂版】（英→和）', 'ターゲット1400【4訂版】（和→英）','システム英単語【改訂五版】（英→和）','システム英単語【改訂五版】（和→英）','Next Stageイディオム・会話表現（英→和）','Next Stageイディオム・会話表現（和→英）'],
+                '高校古典': ['マドンナ古文単語230（Ex）', '重要気分単語315（Ex）', 'みるみる覚える古文単語【三訂版】（いいずな）','古文単語330【三訂版】（いいずな）','明快古典文法【改訂版】（いいずな）','大系古典文法【9版】(数研)']
+            };
+
+            function updateWordbookOptions() {
+                const selectedSubject = subjectSelect.value;
+                const options = wordbooks[selectedSubject];
+
+                wordbookSelect.innerHTML = '';
+                options.forEach(option => {
+                    const opt = document.createElement('option');
+                    opt.value = option;
+                    opt.textContent = option;
+                    wordbookSelect.appendChild(opt);
+                });
+            }
+
+            function updateContactInput() {
+                const selectedMethod = contactMethodSelect.value;
+                contactInput.placeholder = selectedMethod === 'LINE' ? 'LINEアカウント名' : '電話番号';
+            }
+
+            subjectSelect.addEventListener('change', updateWordbookOptions);
+            contactMethodSelect.addEventListener('change', updateContactInput);
+
+            updateWordbookOptions();  // 初期化
+            updateContactInput();     // 初期化
+
+            document.getElementById('notifyForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const name = document.getElementById('name').value;
+                const subject = document.getElementById('subject').value;
+                const wordbook = document.getElementById('wordbook').value;
+                const range = document.getElementById('range').value;
+                const format = document.getElementById('format').value;
+                const location = document.getElementById('location').value;
+                const notes = document.getElementById('notes').value;
+                const contactMethod = document.getElementById('contactMethod').value;
+                const contact = document.getElementById('contact').value;
+                const token = '8eYcZCzhaOzYUsfzU5FTtRiDqE8Qd4AAZUbcOLnTXGR'; // 取得したLINE Notifyのトークンをここに入力
+
+                const message = `
+名前: ${name}
+単語の作成科目: ${subject}
+作成単語帳: ${wordbook}
+出題範囲: ${range}
+出題形式: ${format}
+受け取り希望: ${location}
+その他特記事項等: ${notes}
+作成後連絡方法: ${contactMethod}
+連絡先: ${contact}
+                `;
+
+                fetch('https://notify-api.line.me/api/notify', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: `message=${encodeURIComponent(message)}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 200) {
+                        alert('通知が送信されました');
+                    } else {
+                        alert('通知の送信に失敗しました');
+                    }
+                })
+                .catch(error => {
+                    console.error('エラー:', error);
+                    alert('通知の送信に失敗しました');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
